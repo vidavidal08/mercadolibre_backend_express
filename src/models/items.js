@@ -2,7 +2,7 @@
 var dbConn = require("../../config/db.config");
 
 
-//User object create
+//Item object create
 var Items = function (items) {
   this.id = items.id;
   this.title = items.title;
@@ -14,7 +14,7 @@ var Items = function (items) {
 };
 
  //get api/v1/user
- Items.findAll = function (idOperation, idRol, result) {
+ Items.findAll = function ( result) {
 
   const queryCommand =`SELECT * FROM mercadolibre.items;`;
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const HTTP = require('http');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 console.log('This is Server.js');
 
