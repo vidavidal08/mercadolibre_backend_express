@@ -3,6 +3,7 @@ const router = express.Router();
 const mercadoLibreController = require("../controllers/items.controller");
 
 // Retrieve kpi
-router.get("/getAllItems", mercadoLibreController.findAll);
+router.get("/items", mercadoLibreController.findAll);
+//router.get("/items/:id", mercadoLibreController.descripcionById);
 
 module.exports = router;

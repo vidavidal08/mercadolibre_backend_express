@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 });
 
 const mercadoLibre = require("./src/routes/items.routes");
-app.use("/api/v1/mercadolibre", mercadoLibre);
+app.use("/api", mercadoLibre);
 
 var httpServer = HTTP.createServer(app);
 

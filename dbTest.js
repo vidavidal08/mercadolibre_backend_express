@@ -1,3 +1,5 @@
+//Script to connect to Mysql DB
+
 "use strict";
 const mysql = require("mysql");
 
