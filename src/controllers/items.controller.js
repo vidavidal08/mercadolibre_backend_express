@@ -65,14 +65,12 @@ exports.findAll = function (req, res) {
 exports.descripcionById = function (req, res) {
   let newJson = [];
   const id = req.params.id;// item in params
-   let idCategory ="";
+  ;
   requestify.get(`https://api.mercadolibre.com/items/${id}`)
     .then(function (response) {
       // Get the response body (JSON parsed or jQuery object for XMLs)
       const data = response.getBody();
-      idCategory = data.category_id;
-
-      console.log(idCategory);
+      const idCategory = data.category_id;
 
       newJson.push({
         author: {
@@ -92,33 +90,38 @@ exports.descripcionById = function (req, res) {
         condition: data.condition,
         free_shipping: data.shipping.free_shipping,
         sold_quantity: data.sold_quantity,
-        description: "dummy",
-        categories: []
+        description: "",
+        categories: idCategory
 
       });
+
       return newJson;
 
     }).then(function (newJson) {
       requestify.get(`https://api.mercadolibre.com/items/${id}/description`)
         .then(function (response2) {
-          const data2 = response2.getBody();
+          const data2 = response2.getBody()
+
           const description = data2.plain_text;
           newJson[0].description = description;
-        })
+          console.log(newJson[0]);
+          return newJson;
 
-        return newJson;
-    }).then(function (newJson) {
-    requestify.get(`https://api.mercadolibre.com/categories/${idCategory}`)
-    .then(function (response3) {
-      // Get the response body (JSON parsed or jQuery object for XMLs)
-      const data3 = response3.getBody();
-      const categories = data3.path_from_root;
-      newJson[0].categories = categories;
-      res.json(newJson);
+        }).then(function (newJson) {
+          const idCategory = newJson[0].categories;
+          requestify.get(`https://api.mercadolibre.com/categories/${idCategory}`)
+            .then(function (response3) {
+              // Get the response body (JSON parsed or jQuery object for XMLs)
+              const data3 = response3.getBody();
+              console.log("getCategories", data3);
 
+              const categories = data3.path_from_root;
+              newJson[0].categories = categories;
+              res.json(newJson);
+
+            });
+        });
     });
-  })
-
 };
 
 
